@@ -61,3 +61,75 @@ function start() {
       }
     });
 }
+
+function viewEmployees() {
+  connection.query("SELECT * FROM employee", function (err, results) {
+    if (err) throw err;
+    else {
+      console.table(results);
+    }
+    start();
+  });
+}
+
+function viewByDepartment() {
+  inquirer
+    .prompt([
+      {
+        name: "departmentChoice",
+        type: "list",
+        message: "Which manager ID would you like to view?",
+        choices: [111, 222, 333, 444],
+      },
+    ])
+    .then(function (answer) {
+      if (answer.departmentChoice === 111) {
+        connection.query(
+          `SELECT * FROM role WHERE department_id = ${answer.departmentChoice};`,
+          function (err, results) {
+            if (err) throw err;
+            else {
+              console.table(results);
+            }
+            start();
+          }
+        );
+      }
+    });
+}
+
+function viewByManager() {
+  inquirer
+    .prompt([
+      {
+        name: "managerChoice",
+        type: "list",
+        message: "Which manager ID would you like to view?",
+        choices: [101, 202, 303, 404],
+      },
+    ])
+    .then(function (answer) {
+      if (answer.managerChoice === 101) {
+        connection.query(
+          `SELECT * FROM employee WHERE manager_id = ${answer.managerChoice};`,
+          function (err, results) {
+            if (err) throw err;
+            else {
+              console.table(results);
+            }
+            start();
+          }
+        );
+      }
+    });
+  // connection.query(
+  //   "select * from employee left join role on employee.id = role.id;",
+  //   function (err, results) {
+  //     if (err) throw err;
+  //     else {
+  //       console.table(results);
+  //     }
+  //     start();
+  //   }
+  // );
+}
