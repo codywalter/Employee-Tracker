@@ -1,5 +1,5 @@
-var mysql = require("mysql");
-var inquirer = require("inquirer");
+const mysql = require("mysql");
+const inquirer = require("inquirer");
 
 // create the connection information for the sql database
 var connection = mysql.createConnection({
@@ -78,12 +78,45 @@ function viewByDepartment() {
       {
         name: "departmentChoice",
         type: "list",
-        message: "Which manager ID would you like to view?",
+        message: "Which Department ID would you like to view?",
         choices: [111, 222, 333, 444],
       },
     ])
     .then(function (answer) {
       if (answer.departmentChoice === 111) {
+        connection.query(
+          `SELECT * FROM role WHERE department_id = ${answer.departmentChoice};`,
+          function (err, results) {
+            if (err) throw err;
+            else {
+              console.table(results);
+            }
+            start();
+          }
+        );
+      } else if (answer.departmentChoice === 222) {
+        connection.query(
+          `SELECT * FROM role WHERE department_id = ${answer.departmentChoice};`,
+          function (err, results) {
+            if (err) throw err;
+            else {
+              console.table(results);
+            }
+            start();
+          }
+        );
+      } else if (answer.departmentChoice === 333) {
+        connection.query(
+          `SELECT * FROM role WHERE department_id = ${answer.departmentChoice};`,
+          function (err, results) {
+            if (err) throw err;
+            else {
+              console.table(results);
+            }
+            start();
+          }
+        );
+      } else if (answer.departmentChoice === 444) {
         connection.query(
           `SELECT * FROM role WHERE department_id = ${answer.departmentChoice};`,
           function (err, results) {
@@ -120,16 +153,101 @@ function viewByManager() {
             start();
           }
         );
+      } else if (answer.managerChoice === 202) {
+        connection.query(
+          `SELECT * FROM employee WHERE manager_id = ${answer.managerChoice};`,
+          function (err, results) {
+            if (err) throw err;
+            else {
+              console.table(results);
+            }
+            start();
+          }
+        );
+      } else if (answer.managerChoice === 303) {
+        connection.query(
+          `SELECT * FROM employee WHERE manager_id = ${answer.managerChoice};`,
+          function (err, results) {
+            if (err) throw err;
+            else {
+              console.table(results);
+            }
+            start();
+          }
+        );
+      } else if (answer.managerChoice === 404) {
+        connection.query(
+          `SELECT * FROM employee WHERE manager_id = ${answer.managerChoice};`,
+          function (err, results) {
+            if (err) throw err;
+            else {
+              console.table(results);
+            }
+            start();
+          }
+        );
       }
     });
-  // connection.query(
-  //   "select * from employee left join role on employee.id = role.id;",
-  //   function (err, results) {
-  //     if (err) throw err;
-  //     else {
-  //       console.table(results);
-  //     }
-  //     start();
-  //   }
-  // );
+}
+
+function addEmployee() {
+  inquirer
+    .prompt([
+      {
+        name: "employeeFirstName",
+        type: "input",
+        message: "What is your employee's FIRST NAME?",
+      },
+      {
+        name: "employeeLastName",
+        type: "input",
+        message: "What is your employee's LAST NAME?",
+      },
+      {
+        name: "employeeRoleId",
+        type: "list",
+        message: "What is your employee's ROLE ID?",
+        choices: [100, 200, 300, 400],
+      },
+      {
+        name: "employeeManagerId",
+        type: "list",
+        message: "What is your employee's MANAGER ID?",
+        choices: [101, 202, 303, 404],
+      },
+      {
+        name: "employeeTitle",
+        type: "list",
+        message: "What is your employee's TITLE?",
+        choices: [
+          "Front-End Developer",
+          "Back-End Developer",
+          "Admin Assistant",
+          "Accountant",
+        ],
+      },
+      {
+        name: "employeeSalary",
+        type: "number",
+        message: "What is your employee's SALARY?",
+      },
+      {
+        name: "employeeDepartmentId",
+        type: "list",
+        message: "What is your employee's DEPARTMENT ID?",
+        choices: [111, 222, 333, 444],
+      },
+    ])
+    .then(function (answer) {
+      connection.query(
+        `INSERT INTO department (name) VALUES ("${answer.employeeFirstName} ${answer.employeeLastName}");`,
+        function (err, results) {
+          if (err) throw err;
+          else {
+            console.table(results);
+          }
+          start();
+        }
+      );
+    });
 }
