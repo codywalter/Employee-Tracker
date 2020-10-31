@@ -239,15 +239,13 @@ function addEmployee() {
       },
     ])
     .then(function (answer) {
-      connection.query(
-        `INSERT INTO department (name) VALUES ("${answer.employeeFirstName} ${answer.employeeLastName}");`,
-        function (err, results) {
-          if (err) throw err;
-          else {
-            console.table(results);
-          }
-          start();
+      let qString = `INSERT INTO department (name) VALUES ("${answer.employeeFirstName} ${answer.employeeLastName}");INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("${answer.employeeFirstName}", "${answer.employeeLastName}", ${answer.employeeRoleId}, ${answer.employeeManagerId});`;
+      connection.query(qString, function (err, results) {
+        if (err) throw err;
+        else {
+          console.table(results);
         }
-      );
+        start();
+      });
     });
 }

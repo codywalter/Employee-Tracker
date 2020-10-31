@@ -27,7 +27,7 @@ None
 
             To test, run the following command: node employee.js
 
-![]()
+![](./assets/employee-tracker.gif)
 ![]()
 
 ## Contributors
